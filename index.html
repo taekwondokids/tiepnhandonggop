@@ -13,7 +13,6 @@
     
     <!-- Header & Logo Section -->
     <div class="text-center mb-5">
-      <!-- Logo thu nhỏ linh hoạt (h-12 tương đương 48px trên mobile, h-14 trên màn hình lớn) -->
       <div class="flex justify-center mb-2.5">
         <img 
           src="logo.png" 
@@ -23,7 +22,7 @@
         >
       </div>
       
-      <!-- Tiêu đề Thương hiệu: Cam kết hiển thị đúng 1 dòng trên TẤT CẢ các dòng điện thoại -->
+      <!-- Tiêu đề Thương hiệu hiển thị chính xác 1 dòng trên mọi màn hình -->
       <h1 class="font-bold text-red-600 uppercase whitespace-nowrap text-[clamp(11px,3.6vw,18px)] tracking-tight">
         TRUNG TÂM TAEKWONDO KIDS VIỆT NAM
       </h1>
@@ -77,7 +76,9 @@
   </div>
 
   <script>
+    // Điền Web App URL sau khi deploy Google Apps Script vào đây
     const SCRIPT_URL = 'THAY_URL_WEB_APP_GOOGLE_APPS_SCRIPT_TAI_DAY';
+    
     const form = document.getElementById('feedbackForm');
     const btnSubmit = document.getElementById('btnSubmit');
     const statusMessage = document.getElementById('statusMessage');
