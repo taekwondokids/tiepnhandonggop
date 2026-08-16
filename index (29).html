@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Khảo Sát Ý Kiến - Taekwondo Kids Việt Nam</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-slate-50 min-h-screen py-8 px-4">
+  <div class="max-w-lg mx-auto bg-white rounded-xl shadow-md p-6 border border-slate-100">
+    <div class="text-center mb-6">
+      <h1 class="text-xl font-bold text-red-600 uppercase">TRUNG TÂM TAEKWONDO KIDS VIỆT NAM</h1>
+      <p class="text-sm font-semibold text-slate-700 mt-1">Ý kiến đóng góp: Kỳ thi Thăng cấp đai Lần thứ II - 2026</p>
+    </div>
+
+    <form id="feedbackForm" class="space-y-4">
+      <div>
+        <label class="block text-sm font-medium text-slate-700 mb-1">Họ và tên võ sinh *</label>
+        <input type="text" id="voSinh" required class="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:outline-none">
+      </div>
+
+      <div>
+        <label class="block text-sm font-medium text-slate-700 mb-1">Họ và tên phụ huynh *</label>
+        <input type="text" id="phuHuynh" required class="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:outline-none">
+      </div>
+
+      <div>
+        <label class="block text-sm font-medium text-slate-700 mb-1">Số điện thoại hoặc Email *</label>
+        <input type="text" id="lienHe" required class="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:outline-none">
+      </div>
+
+      <div>
+        <label class="block text-sm font-medium text-slate-700 mb-1">Cơ sở theo học *</label>
+        <select id="coSo" required class="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:outline-none bg-white">
+          <option value="">-- Chọn cơ sở --</option>
+          <option value="Hapulico">Hapulico</option>
+          <option value="Nghĩa Đô">Nghĩa Đô</option>
+          <option value="Green Stars">Green Stars</option>
+          <option value="Hà Đông">Hà Đông</option>
+          <option value="Long Biên">Long Biên</option>
+        </select>
+      </div>
+
+      <div>
+        <label class="block text-sm font-medium text-slate-700 mb-1">Đóng góp ý kiến *</label>
+        <textarea id="yKien" rows="4" required class="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:outline-none" placeholder="Nhập ý kiến đóng góp của phụ huynh tại đây..."></textarea>
+      </div>
+
+      <button type="submit" id="btnSubmit" class="w-full bg-red-600 hover:bg-red-700 text-white font-medium py-2.5 rounded-lg transition duration-200">
+        Gửi ý kiến
+      </button>
+    </form>
+    
+    <div id="statusMessage" class="hidden mt-4 p-3 text-center rounded-lg text-sm font-medium"></div>
+  </div>
+
+  <script>
+    const SCRIPT_URL = 'THAY_URL_WEB_APP_GOOGLE_APPS_SCRIPT_TAI_DAY';
+    const form = document.getElementById('feedbackForm');
+    const btnSubmit = document.getElementById('btnSubmit');
+    const statusMessage = document.getElementById('statusMessage');
+
+    form.addEventListener('submit', e => {
+      e.preventDefault();
+      btnSubmit.disabled = true;
+      btnSubmit.innerText = 'Đang gửi...';
+
+      const payload = {
+        voSinh: document.getElementById('voSinh').value,
+        phuHuynh: document.getElementById('phuHuynh').value,
+        lienHe: document.getElementById('lienHe').value,
+        coSo: document.getElementById('coSo').value,
+        yKien: document.getElementById('yKien').value
+      };
+
+      fetch(SCRIPT_URL, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      })
+      .then(() => {
+        statusMessage.className = 'mt-4 p-3 text-center rounded-lg text-sm font-medium bg-green-100 text-green-700';
+        statusMessage.innerText = 'Cảm ơn phụ huynh đã gửi đóng góp ý kiến!';
+        statusMessage.classList.remove('hidden');
+        form.reset();
+      })
+      .catch(error => {
+        statusMessage.className = 'mt-4 p-3 text-center rounded-lg text-sm font-medium bg-red-100 text-red-700';
+        statusMessage.innerText = 'Xảy ra lỗi khi gửi. Vui lòng thử lại sau.';
+        statusMessage.classList.remove('hidden');
+      })
+      .finally(() => {
+        btnSubmit.disabled = false;
+        btnSubmit.innerText = 'Gửi ý kiến';
+      });
+    });
+  </script>
+</body>
+</html>
